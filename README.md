@@ -86,4 +86,4 @@ sequenceDiagram
 
 ## 코드 구조
 
-`routes`에서 URL을 연결하고 `controllers`에서 요청을 처리합니다. `models`가 SQLite에 접근하고 `middlewares`가 JWT와 폼 토큰을 확인합니다. EJS는 공통 레이아웃과 상세·입력 화면을, React는 홈 피드의 검색·필터를 실시간으로 갱신합니다. React CDN에 연결할 수 없는 환경에서는 EJS 검색 양식을 사용할 수 있습니다.
+`routes`에서 URL을 연결하고 `controllers`에서 요청을 처리합니다. `models`가 SQLite에 접근하고 `middlewares`가 JWT와 폼 토큰을 확인합니다. Express는 검색어와 분류를 처리하고, EJS는 행사 목록과 검색 결과, 상세 화면 및 입력 양식을 서버에서 렌더링합니다.

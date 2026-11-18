@@ -38,7 +38,7 @@ h1, h2, h3, p { margin: 0; overflow-wrap: anywhere; }
 }
 .actions { display: flex; align-items: center; gap: 10px; }
 .wrap-actions { flex-wrap: wrap; }
-.button, .outline, .plain, .chips button, .chips a {
+.button, .outline, .plain, .chips a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -63,9 +63,9 @@ h1, h2, h3, p { margin: 0; overflow-wrap: anywhere; }
 .search { display: flex; align-items: center; gap: 7px; min-width: 0; }
 .search input { min-width: 0; }
 .chips { display: flex; align-items: center; gap: 4px; }
-.chips button, .chips a { color: var(--muted); background: transparent; }
-.chips button:hover, .chips a:hover { color: var(--accent); }
-.chips [aria-pressed=true], .chips [aria-current=true] { color: var(--accent-dark); background: #eef3ff; }
+.chips a { color: var(--muted); background: transparent; }
+.chips a:hover { color: var(--accent); }
+.chips [aria-current=true] { color: var(--accent-dark); background: #eef3ff; }
 input, select, textarea {
   width: 100%;
   min-height: 44px;
