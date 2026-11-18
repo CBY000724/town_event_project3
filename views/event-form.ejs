@@ -1,0 +1,23 @@
+<%- include("partials/header") %>
+<section class="panel">
+  <a class="back" href="<%= event.id ? '/events/' + event.id : '/' %>">← 돌아가기</a>
+  <h1><%= title %></h1>
+  <% if (error) { %><p class="error" role="alert"><%= error %></p><% } %>
+  <form class="fields" action="<%= event.id ? '/events/' + event.id + '/edit' : '/events' %>" method="post">
+    <input type="hidden" name="formToken" value="<%= formToken %>">
+    <label>행사 이름<input name="title" required maxlength="80" value="<%= event.title || '' %>"></label>
+    <div class="pair">
+      <label>분류<select name="category" required>
+        <option value="">선택해 주세요</option>
+        <% for (const category of categories) { %>
+          <option value="<%= category %>" <%= event.category === category ? 'selected' : '' %>><%= category %></option>
+        <% } %>
+      </select></label>
+      <label>행사 날짜<input type="date" name="event_date" required value="<%= event.event_date || '' %>"></label>
+    </div>
+    <label>장소<input name="location" required maxlength="100" value="<%= event.location || '' %>"></label>
+    <label>행사 소개<textarea name="description" required maxlength="2000" rows="6"><%= event.description || '' %></textarea></label>
+    <button class="button" type="submit">저장하기</button>
+  </form>
+</section>
+<%- include("partials/footer") %>

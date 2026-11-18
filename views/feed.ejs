@@ -1,0 +1,51 @@
+<%- include("partials/header") %>
+<header class="feed-heading">
+  <h1>우리 동네 행사</h1>
+  <p>동네 행사, 캠퍼스 축제, 팝업 일정을 한곳에서 찾아보세요.</p>
+</header>
+<section aria-label="행사 목록">
+  <div id="event-feed" data-category="<%= selected %>" data-query="<%= query %>">
+    <form class="filters" action="/" method="get">
+      <div class="chips" role="group" aria-label="행사 분류">
+        <% for (const category of ['전체', ...categories]) { %>
+          <a href="/?<%= new URLSearchParams({ category, q: query }) %>" aria-current="<%= selected === category %>"><%= category %></a>
+        <% } %>
+      </div>
+      <div class="search">
+        <input type="hidden" name="category" value="<%= selected %>">
+        <input name="q" type="search" value="<%= query %>" placeholder="행사 이름 또는 장소" aria-label="행사 검색" maxlength="100">
+        <button class="outline" type="submit">검색</button>
+      </div>
+    </form>
+    <% if (!matches.length) { %>
+      <div class="empty-state">
+        <h2><%= count ? '검색 결과가 없어요' : '아직 등록된 행사가 없어요' %></h2>
+        <p><%= count ? '행사 이름이나 장소를 바꿔 검색해 보세요.' : '알리고 싶은 행사가 있다면 첫 소식을 올려 보세요.' %></p>
+        <a class="outline" href="<%= count ? '/' : '/events/new' %>"><%= count ? '전체 행사 보기' : '첫 행사 등록' %></a>
+      </div>
+    <% } else { %>
+      <div class="event-list">
+        <% for (const event of matches) { %>
+          <% const [, month, day] = event.event_date.split('-'); %>
+          <article class="event-row">
+            <a href="/events/<%= event.id %>">
+              <time class="event-date" datetime="<%= event.event_date %>" aria-label="<%= event.event_date %>">
+                <span><%= Number(month) %>월</span><strong><%= day %></strong>
+              </time>
+              <div class="event-body">
+                <span class="tag"><%= event.category %></span>
+                <h2><%= event.title %></h2>
+                <p><%= event.location %></p>
+              </div>
+              <span class="event-meta" aria-label="좋아요 <%= event.like_count %>개">♡ <%= event.like_count %></span>
+            </a>
+          </article>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js" defer></script>
+<script src="/feed.js" defer></script>
+<%- include("partials/footer") %>

@@ -1,0 +1,15 @@
+<%- include("partials/header") %>
+<section class="panel login">
+  <h1>동네소식 로그인</h1>
+  <% if (registered) { %>
+    <p class="notice" role="status">가입이 완료됐어요. 아이디와 비밀번호로 로그인해 주세요.</p>
+  <% } %>
+  <% if (error) { %><p class="error" role="alert"><%= error %></p><% } %>
+  <form class="fields" action="/login" method="post">
+    <label>아이디<input name="username" value="<%= username %>" autocomplete="username" required maxlength="30"></label>
+    <label>비밀번호<input name="password" type="password" autocomplete="current-password" required maxlength="72"></label>
+    <button class="button" type="submit">로그인</button>
+  </form>
+  <a class="outline" href="/register">회원가입</a>
+</section>
+<%- include("partials/footer") %>
