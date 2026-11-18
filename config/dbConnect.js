@@ -60,4 +60,18 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS likes_event ON likes(event_id);
   CREATE INDEX IF NOT EXISTS comments_event ON comments(event_id);
 `);
+if (process.env.RENDER === "true") {
+  db.transaction(() => {
+    const hasUsers = db.prepare("SELECT 1 FROM users LIMIT 1").get();
+    if (hasUsers) return;
+
+    const seedPath = path.join(__dirname, "..", "sql", "행사 insert.sql");
+    // The standalone SQL file declares its own transaction. Startup owns it here.
+    const inserts = fs.readFileSync(seedPath, "utf8")
+      .replace(/^PRAGMA foreign_keys = ON;\r?\nBEGIN;$/m, "")
+      .replace(/^COMMIT;\s*$/m, "");
+    db.exec(inserts);
+  }).immediate();
+}
+
 module.exports = db;
